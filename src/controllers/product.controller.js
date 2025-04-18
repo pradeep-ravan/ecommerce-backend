@@ -39,7 +39,7 @@ const getProducts = async (req, res) => {
     const db = req.app.locals.db;
     
     // Execute query
-    const products = await db.collection('products')
+    const products = await db?.collection('products')
       .find(filter)
       .sort(sortObj)
       .skip(skip)
@@ -47,7 +47,7 @@ const getProducts = async (req, res) => {
       .toArray();
     
     // Get total count for pagination
-    const total = await db.collection('products').countDocuments(filter);
+    const total = await db?.collection('products').countDocuments(filter);
     
     // Return data with pagination metadata
     res.json({
@@ -74,7 +74,7 @@ const getProductById = async (req, res) => {
       return res.status(400).json({ error: 'Invalid product ID' });
     }
     
-    const product = await db.collection('products').findOne({ 
+    const product = await db?.collection('products').findOne({ 
       _id: new ObjectId(req.params.id) 
     });
     

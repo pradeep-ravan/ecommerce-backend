@@ -7,8 +7,8 @@ const connectDB = async (app) => {
     const client = new MongoClient(process.env.MONGO_URI);
     await client.connect();
     console.log('MongoDB connected');
-   // Explicitly use ecommerce database
-   db = client.db('ecommerce');
+    // Explicitly use ecommerce database
+    db = client.db('ecommerce');
     
     // Make db available to routes
     app.locals.db = db;

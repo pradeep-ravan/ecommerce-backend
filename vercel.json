@@ -2,15 +2,15 @@
 	"version": 2,
 	"name": "ecommerce-backend-api",
 	"builds": [
-		{
-			"src": "app.js",
-			"use": "@vercel/node"
-		}
+	  {
+		"src": "src/app.js",
+		"use": "@vercel/node"
+	  }
 	],
 	"routes": [
-		{
-			"src": "/.*",
-			"dest": "src/app.js"
-		}
+	  {
+		"src": "/(.*)",
+		"dest": "/src/app.js"
+	  }
 	]
-}
+  }
