@@ -7,13 +7,10 @@ const connectDB = async (app) => {
     const client = new MongoClient(process.env.MONGO_URI);
     await client.connect();
     console.log('MongoDB connected');
-    // Explicitly use ecommerce database
     db = client.db('ecommerce');
     
-    // Make db available to routes
     app.locals.db = db;
     
-    // Initialize with sample data if needed
     await initializeData(db);
     
     return db;
@@ -23,7 +20,7 @@ const connectDB = async (app) => {
   }
 };
 
-// Initialize database with sample data
+
 async function initializeData(db) {
   const productCount = await db.collection('products').countDocuments();
   
@@ -39,7 +36,7 @@ async function initializeData(db) {
     
     await db.collection('categories').insertMany(categories);
     
-    // Sample products (based on image in assignment)
+
     const products = [];
     
     // Creating fertilizer products
@@ -55,7 +52,6 @@ async function initializeData(db) {
       });
     }
     
-    // Creating seed products
     for (let i = 1; i <= 4; i++) {
       products.push({
         title: `Premium Seeds ${i}`,
@@ -68,7 +64,6 @@ async function initializeData(db) {
       });
     }
     
-    // Creating tool products
     for (let i = 1; i <= 4; i++) {
       products.push({
         title: `Garden Tool ${i}`,

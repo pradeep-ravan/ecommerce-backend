@@ -1,12 +1,8 @@
 const { ObjectId } = require('mongodb');
 
-// In-memory cart storage (for simplicity)
-// In a real app, you'd use a database or Redis
 const carts = {};
 
-// Helper function to generate session ID (in a real app, use a proper session mechanism)
 function getSessionId(req) {
-  // For simplicity, we're using a header. In a real app, use cookies/JWT
   return req.headers['session-id'] || 'default-session';
 }
 
@@ -15,10 +11,8 @@ const addToCart = async (req, res) => {
     const { productId, quantity } = req.validatedData;
     const sessionId = getSessionId(req);
     
-    // Check if product exists
     const db = req.app.locals.db;
     
-    // Check if productId is valid ObjectId
     if (!ObjectId.isValid(productId)) {
       return res.status(400).json({ error: 'Invalid product ID' });
     }
@@ -31,21 +25,17 @@ const addToCart = async (req, res) => {
       return res.status(404).json({ error: 'Product not found' });
     }
     
-    // Initialize cart if needed
     if (!carts[sessionId]) {
       carts[sessionId] = [];
     }
     
-    // Check if product already in cart
     const existingItemIndex = carts[sessionId].findIndex(
       item => item.productId === productId
     );
     
     if (existingItemIndex !== -1) {
-      // Update quantity if product already in cart
       carts[sessionId][existingItemIndex].quantity += quantity;
     } else {
-      // Add new item to cart
       carts[sessionId].push({
         productId,
         quantity,

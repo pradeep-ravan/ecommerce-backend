@@ -5,22 +5,18 @@ const getProducts = async (req, res) => {
     const { page, limit, sort, category, minPrice, maxPrice } = req.validatedParams;
     const skip = (page - 1) * limit;
     
-    // Build filter object
     const filter = {};
     
-    // Apply category filter
     if (category) {
       filter.category = Array.isArray(category) ? { $in: category } : category;
     }
     
-    // Apply price filter
     if (minPrice !== undefined || maxPrice !== undefined) {
       filter.price = {};
       if (minPrice !== undefined) filter.price.$gte = minPrice;
       if (maxPrice !== undefined) filter.price.$lte = maxPrice;
     }
     
-    // Build sort object
     let sortObj = {};
     switch (sort) {
       case 'latest':
@@ -38,7 +34,6 @@ const getProducts = async (req, res) => {
     
     const db = req.app.locals.db;
     
-    // Execute query
     const products = await db?.collection('products')
       .find(filter)
       .sort(sortObj)
@@ -46,10 +41,8 @@ const getProducts = async (req, res) => {
       .limit(limit)
       .toArray();
     
-    // Get total count for pagination
     const total = await db?.collection('products').countDocuments(filter);
     
-    // Return data with pagination metadata
     res.json({
       data: products,
       meta: {
@@ -69,7 +62,6 @@ const getProductById = async (req, res) => {
   try {
     const db = req.app.locals.db;
     
-    // Check if id is valid ObjectId
     if (!ObjectId.isValid(req.params.id)) {
       return res.status(400).json({ error: 'Invalid product ID' });
     }

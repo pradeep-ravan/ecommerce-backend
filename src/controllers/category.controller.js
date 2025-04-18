@@ -1,6 +1,5 @@
 const getCategories = async (req, res) => {
   try {
-    // Check if db connection exists
     if (!req.app.locals.db) {
       return res.status(500).json({ error: 'Database connection not established' });
     }
@@ -8,7 +7,6 @@ const getCategories = async (req, res) => {
     const db = req.app.locals.db;
     const categories = await db.collection('categories').find().toArray();
     
-    // Handle empty results
     if (!categories || categories.length === 0) {
       return res.status(404).json({ message: 'No categories found' });
     }
