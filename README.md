@@ -54,19 +54,12 @@ cd ecommerce-backend
 npm install
 ```
 
-3. Create a `.env` file in the backend directory
-```
-PORT=5000
-MONGO_URI=mongodb://localhost:27017/ecommerce   (for MongoDB (local installation))
-MONGO_URI=mongodb+srv://username:password@cluster0.mongodb.net/ecommerce?retryWrites=true&w=majority  (for MongoDB (MongoDB Atlas account))
-```
 
-4. Start the backend server
+3. Start the backend server
 ```bash
 npm run dev
 ```
 The backend server will run on http://localhost:5000
-
 #### Frontend Setup
 1. Open a new terminal and navigate to the frontend directory
 ```bash
